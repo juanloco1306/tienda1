@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import React, { useState } from "react";
 import {
   Chart as ChartJS,
@@ -12,7 +12,6 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { faker } from '@faker-js/faker'
-
 export default function WeeklySalesChart(){
   ChartJS.register(
     CategoryScale,
@@ -45,7 +44,7 @@ export default function WeeklySalesChart(){
         datasets: [
           {
             label: 'Sales',
-            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+            data: labels.map(() => faker.number.int({ min: -1000, max: 1000 })),
             borderColor: 'rgb(255, 99, 132)',
             backgroundColor: 'rgba(255, 99, 132, 0.5)',
           },
@@ -54,7 +53,18 @@ export default function WeeklySalesChart(){
     },
     {
       title: "Orders",
-      type: "orders"
+      type: "orders",
+      data : {
+        labels,
+        datasets: [
+          {
+            label: 'Orders',
+            data: labels.map(() => faker.number.int({ min: -1000, max: 1000 })),
+            borderColor: 'rgb(0, 137, 132)',
+            backgroundColor: 'rgba(0, 137, 132, 0.5)',
+          },
+        ],
+      }
     }
   ];
   const [chartTodDisplay, setChartToDisplay]=useState(tabs[0].type);
@@ -80,7 +90,7 @@ export default function WeeklySalesChart(){
 
 {tabs.map((tab,i) => {
   if (chartTodDisplay === tab.type) {
-    return <Line options={options} data={data} />
+    return <Line options={options} data={tab.data} key={i} />
   }
   return null;
 })}
