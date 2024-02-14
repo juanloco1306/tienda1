@@ -1,5 +1,5 @@
 
-import {AlignJustify, Sun, Bell, User } from "lucide-react";
+import {AlignJustify, Sun, Bell, User, LayoutDashboard, Settings, LogOut } from "lucide-react";
 import React from 'react'
 import Image from "next/image";
 import {
@@ -24,13 +24,27 @@ export default function Navbar() {
             
             <DropdownMenu>
   <DropdownMenuTrigger><button><Image src='/profile.jpg' alt="User profile" width={200} height={200} className="w-8 h-8 rounded-full"/></button></DropdownMenuTrigger>
-  <DropdownMenuContent>
+  <DropdownMenuContent className="py-2 px-4 pr-8">
     <DropdownMenuLabel>My Account</DropdownMenuLabel>
     <DropdownMenuSeparator />
-    <DropdownMenuItem>Profile</DropdownMenuItem>
-    <DropdownMenuItem>Billing</DropdownMenuItem>
-    <DropdownMenuItem>Team</DropdownMenuItem>
-    <DropdownMenuItem>Subscription</DropdownMenuItem>
+    <DropdownMenuItem>
+      <button className="flex items-center space-x-2">
+      <LayoutDashboard className="mr-2 h-4 w-4"/>
+      <span>Dashboard</span>
+      </button>
+    </DropdownMenuItem>
+    <DropdownMenuItem>
+      <button className="flex items-center space-x-2">
+    <Settings className="mr-2 h-4 w-4"/>
+      <span>Edit Profile</span> 
+      </button>     
+    </DropdownMenuItem>
+    <DropdownMenuItem>
+      <button className="flex items-center space-x-2">
+    <LogOut className="mr-2 h-4 w-4"/>
+      <span>Logout</span>   
+      </button>   
+    </DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>
 
