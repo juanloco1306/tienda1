@@ -13,7 +13,7 @@ export default function ThemeSwitcherBtn() {
         return null;
     }
   return (
-    <button className="dark:text-lime-500" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+    <button className="text-lime-700 dark:text-lime-500" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
         {theme === "light" ? <Moon/>:<Sun/>}
     </button>
   )
