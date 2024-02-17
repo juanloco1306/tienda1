@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../../public/logo.jpg";
@@ -15,19 +15,22 @@ import {
   Warehouse,
   LogOut,
   ChevronRight,
+  Boxes,
+  LayoutList,
+  SendToBack,
+  ScanSearch,
+  MonitorPlay,
+  ChevronDown,
 } from "lucide-react";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 
 import { usePathname } from "next/navigation";
 
-export default function Sidebar() {
+export default function Sidebar({showSidebar}) {
   const pathname = usePathname();
   const sidebarLinks = [
     {
@@ -69,32 +72,33 @@ export default function Sidebar() {
   const catalogueLinks = [
     {
       title: "Products",
-      icon: Users2,
+      icon: Boxes,
       href: "/dashboard/products",
     },
     {
       title: "Categories",
-      icon: Users2,
-      href: "/dashboard/Categories",
+      icon: LayoutList,
+      href: "/dashboard/categories",
     },
     {
       title: "Attributes",
-      icon: Users2,
+      icon: SendToBack,
       href: "/dashboard/attributes",
     },
     {
       title: "Coupons",
-      icon: Users2,
+      icon: ScanSearch,
       href: "/dashboard/coupons",
     },
     {
       title: "store sliders",
-      icon: Users2,
+      icon: MonitorPlay,
       href: "/dashboard/sliders",
     },
   ]
+  const [openMenu,setOpenMenu]=useState(false)
   return (
-    <div className="dark:bg-slate-700 bg-white space-y-6 w-64 h-screen text-slate-800 dark:text-slate-50 fixed left-0 top-0 shadow-md">
+    <div className=" hidden sm:block dark:bg-slate-700 bg-white space-y-6 w-64 h-screen text-slate-800 dark:text-slate-50 fixed left-0 top-0 shadow-md">
       <Link className="px-6 py-4" href="#">
         <Image src={logo} alt="Image" className="w-36" />
       </Link>
@@ -110,38 +114,37 @@ export default function Sidebar() {
           <LayoutGrid />
           <span>Dashboard</span>
         </Link>
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <button className="flex items-center space-x-6 px-6 py-2 ">
+        <Collapsible className="px-6 py-2">
+          <CollapsibleTrigger onClick={() => setOpenMenu(!openMenu)}>
+            <button className="flex items-center space-x-6  py-2 ">
               <div className="flex items-center space-x-3">
                 <Slack />
                 <span>Catalogue</span>
               </div>
-              <ChevronRight />
+              {openMenu ? <ChevronDown/> :<ChevronRight />}
             </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="rounded-lg py-3 px-3 pl-6 bg-slate-800">
             {
               catalogueLinks.map((item,i) => {
+                const Icon = item.icon;
                 return(
-                  <DropdownMenuItem key={i}>
-                  <Link 
+                  <Link key={i}
                     href={item.href}
                     className={
                       pathname === item.href
-                        ? "flex items-center space-x-3 px-6 py-2 border-l-8 border-lime-600 text-lime-500"
-                        : "flex items-center space-x-3 px-6 py-2"
+                        ? "flex items-center space-x-3 py-1 text-sm text-lime-500"
+                        : "flex items-center space-x-3 py-1"
                     }
                   >
-                    <LayoutGrid />
+                    <Icon className="w-4 h-4" />
                     <span>{item.title}</span>
                   </Link>
-                </DropdownMenuItem>
                 )
               })
             }
-          </DropdownMenuContent>
-        </DropdownMenu>
+          </CollapsibleContent>
+        </Collapsible>
         {sidebarLinks.map((item, i) => {
           const Icon = item.icon;
           return (
