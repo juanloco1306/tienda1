@@ -21,6 +21,8 @@ import {
   ScanSearch,
   MonitorPlay,
   ChevronDown,
+  Building2,
+  CircleDollarSign,
 } from "lucide-react";
 import {
   Collapsible,
@@ -30,7 +32,7 @@ import {
 
 import { usePathname } from "next/navigation";
 
-export default function Sidebar({showSidebar}) {
+export default function Sidebar({showSidebar,setShowSidebar}) {
   const pathname = usePathname();
   const sidebarLinks = [
     {
@@ -57,6 +59,16 @@ export default function Sidebar({showSidebar}) {
       title: "Our Staff",
       icon: User,
       href: "/dashboard/staff",
+    },
+    {
+      title: "Limi Commumity",
+      icon: Building2,
+      href: "/dashboard/community",
+    },
+    {
+      title: "Wallet",
+      icon: CircleDollarSign,
+      href: "/dashboard/wallet",
     },
     {
       title: "Settings",
@@ -98,12 +110,13 @@ export default function Sidebar({showSidebar}) {
   ]
   const [openMenu,setOpenMenu]=useState(false)
   return (
-    <div className=" hidden sm:block dark:bg-slate-700 bg-white space-y-6 w-64 h-screen text-slate-800 dark:text-slate-50 fixed left-0 top-0 shadow-md">
-      <Link className="px-6 py-4" href="#">
+    <div className={showSidebar?"sm:block mt-20 sm:mt-0 dark:bg-slate-800 bg-white space-y-6 w-64 h-screen text-slate-800 dark:text-slate-300 fixed left-0 top-0 shadow-md overflow-y-scroll":" mt-20 sm:mt-0 hidden sm:block dark:bg-slate-800 bg-white space-y-6 w-64 h-screen text-slate-800 dark:text-slate-300 fixed left-0 top-0 shadow-md overflow-y-scroll"}>
+      <Link onClick={() => setShowSidebar(false)} className="px-6 py-4" href="/dashboard">
         <Image src={logo} alt="Image" className="w-36" />
       </Link>
-      <div className="space-y-3 flex flex-col mt-14">
+      <div className="space-y-3 flex flex-col ">
         <Link
+        onClick={() => setShowSidebar(false)}
           href="/dashboard"
           className={
             pathname === "/dashboard"
@@ -130,6 +143,7 @@ export default function Sidebar({showSidebar}) {
                 const Icon = item.icon;
                 return(
                   <Link key={i}
+                  onClick={() => setShowSidebar(false)}
                     href={item.href}
                     className={
                       pathname === item.href
@@ -149,6 +163,7 @@ export default function Sidebar({showSidebar}) {
           const Icon = item.icon;
           return (
             <Link
+            onClick={() => setShowSidebar(false)}
               key={i}
               href={item.href}
               className={
