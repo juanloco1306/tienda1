@@ -3,17 +3,28 @@ import SubmitButton from '@/components/FormInputs/SubmitButton'
 import TextareaInput from '@/components/FormInputs/TextAreaInput'
 import TextInput from '@/components/FormInputs/TextInput'
 import FormHeader from '@/components/backoffice/FormHeader'
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import TextareaInput from '@/components/FormInputs/TextAreaInput'
 import { generateSlug } from '@/lib/generateSlug'
+import ImageInput from '@/components/FormInputs/ImageInput'
+import { makePostRequest } from '@/lib/apiRequest'
 
 export default function NewCategory() {
+  const [imageUrl,setImageUrl] = useState("")
+  const [loading,setLoading] = useState(false)
   const {register,handleSubmit,formState:{errors}} = useForm();
   async function onSubmit(data){
     const slug = generateSlug(data.title)
     data.slug=slug
+    data.imageUrl=imageUrl
     console.log(data);
+    makePostRequest(
+      setLoading,
+      endpoint,
+      data,
+      resourceName,
+      reset
+    )
   }
   return (
     <div>
@@ -22,8 +33,9 @@ export default function NewCategory() {
       <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
         <TextInput label="Category Title" name="title" register={register} errors={errors}/>
         <TextareaInput label="Category Description" name="description" register={register} errors={errors}/>
+        <ImageInput imageUrl={imageUrl} setImageUrl={setImageUrl} endpoint="categoryImageUploader" label="Category Image"/>
       </div>
-      <SubmitButton isLoading={false} buttonTitle="Create Category" LoadingButtonTitle="Creating Category please wait..."/>
+      <SubmitButton isLoading={loading} buttonTitle="Create Category" LoadingButtonTitle="Creating Category please wait..."/>
       </form>
     </div>
   )
