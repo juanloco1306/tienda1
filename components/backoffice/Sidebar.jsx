@@ -93,19 +93,14 @@ export default function Sidebar({showSidebar,setShowSidebar}) {
       href: "/dashboard/categories",
     },
     {
-      title: "Attributes",
-      icon: SendToBack,
-      href: "/dashboard/attributes",
-    },
-    {
       title: "Coupons",
       icon: ScanSearch,
       href: "/dashboard/coupons",
     },
     {
-      title: "store sliders",
+      title: "store banners",
       icon: MonitorPlay,
-      href: "/dashboard/sliders",
+      href: "/dashboard/banners",
     },
   ]
   const [openMenu,setOpenMenu]=useState(false)
