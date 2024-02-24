@@ -98,7 +98,7 @@ export default function Sidebar({showSidebar,setShowSidebar}) {
       href: "/dashboard/coupons",
     },
     {
-      title: "store banners",
+      title: "Store Banners",
       icon: MonitorPlay,
       href: "/dashboard/banners",
     },
@@ -132,7 +132,7 @@ export default function Sidebar({showSidebar,setShowSidebar}) {
               {openMenu ? <ChevronDown/> :<ChevronRight />}
             </button>
           </CollapsibleTrigger>
-          <CollapsibleContent className="rounded-lg py-3 px-3 pl-6 bg-slate-800">
+          <CollapsibleContent className="rounded-lg py-3 px-3 pl-6 dark:bg-slate-800 dark:text-slate-300">
             {
               catalogueLinks.map((item,i) => {
                 const Icon = item.icon;
