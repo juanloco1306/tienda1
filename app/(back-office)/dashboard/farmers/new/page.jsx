@@ -10,12 +10,22 @@ import ImageInput from '@/components/FormInputs/ImageInput'
 import { makePostRequest } from '@/lib/apiRequest'
 import { generateCouponCode } from '@/lib/generateCouponCode'
 import { generateUserCode } from '@/lib/generateUserCode'
+import ToggleInput from '@/components/FormInputs/ToggleInput'
+import { useRouter } from 'next/navigation'
 
 export default function NewFarmer() {
   const [loading,setLoading] = useState(false)
   const [couponCode,setCouponCode]=useState()
-  const {register,reset,watch,handleSubmit,formState:{errors}} = useForm();
-
+  const {register,reset,watch,handleSubmit,formState:{errors},} = useForm({
+    defaultValues: {
+      isActive:true,
+    },
+  });
+  const router = useRouter()
+  function redirect(){
+    router.push("/dashboard/farmers");
+  }
+  const isActive = watch("isActive");
   async function onSubmit(data){
     const code = generateUserCode("LFF", data.name)
     data.code = code;
@@ -25,7 +35,8 @@ export default function NewFarmer() {
      "api/farmers",
       data,
       "Farmer",
-     reset
+     reset,
+     redirect
      )
   }
   return (
@@ -38,9 +49,11 @@ export default function NewFarmer() {
         <TextInput label="Farmer´s Email Address" name="email" register={register} errors={errors} className='w-full' /> 
         <TextInput label="Farmer´s Physical Address" name="physicalAddress" register={register} errors={errors} className='w-full' />  
         <TextInput label="Farmer´s Contact Person" name="contactPerson" register={register} errors={errors} className='w-full' />
+        <ImageInput imageUrl={logoUrl} setImageUrl={setLogoUrl} endpoint='farmerProfileUploader' label="Farmer Profile Image"/>
         <TextInput label="Farmer´s Contact Person Phone" name="contactPersonPhone" type='tel' register={register} errors={errors} className='w-full' /> 
-        <TextareaInput label="Farmer´s Payment Terms" name="terms" register={register} errors={errors} />
-        <TextareaInput label="Notes" name="notes" register={register} errors={errors} isRequired= {false} />                     
+        <TextareaInput label="Farmer´s Payment Terms" name="terms" register={register} errors={errors} isRequired={false} />
+        <TextareaInput label="Notes" name="notes" register={register} errors={errors} isRequired={false} />
+        <ToggleInput label="Farmer Status" name="isActive" trueTitle="Active" falseTitle="Draft" register={register}/>                   
       </div>
       <SubmitButton isLoading={loading} buttonTitle="Create Farmer" LoadingButtonTitle="Creating Farmer please wait..."/>
       </form>
