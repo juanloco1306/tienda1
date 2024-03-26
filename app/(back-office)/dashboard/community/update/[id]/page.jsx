@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function UpdateCommunity() {
+export default function UpdateTraining() {
   return (
-    <div>Update Community</div>
+    <div>Update Training</div>
   )
 }
